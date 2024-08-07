@@ -44,7 +44,7 @@ service:
   selector:
     app: springdemoapp
   ports:
-    nodePort: 32410
+    nodePort: 32411
     protocol: TCP
     port: 8080
     targetPort: 8080
