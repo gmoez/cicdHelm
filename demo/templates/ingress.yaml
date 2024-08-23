@@ -15,5 +15,7 @@ spec:
             backend:
               service:
                 name: {{ include "demo.fullname" . }}
+                {{- range .Values.service.ports }}
                 port:
-                  number: {{ .Values.service.ports.port }}
+                  number: {{ .port }}
+                {{- end }}
