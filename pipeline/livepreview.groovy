@@ -19,6 +19,11 @@ pipeline {
         steps {
           
           container('aws-cli') {
+            withCredentials([usernamePassword(credentialsId: 'aws-login', usernameVariable: 'accesskey', passwordVariable: 'secretkey')]) {
+                sh "aws configure set aws_access_key_id ${accesskey}"
+                sh "aws configure set aws_secret_access_key ${secretkey}"
+                sh "aws configure set default.region eu-central-1"
+              } 
 
             sh """aws eks update-kubeconfig --region eu-central-1 --name demo"""
             sh "kubectl get ns"
