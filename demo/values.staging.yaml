@@ -110,4 +110,4 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-path: /
+path: /staging
