@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'testpod' }
     stages {
-        stage('Get latest version of code') {
+        stage('checkout code source') {
             steps {
                  git  url: 'https://github.com/gmoez/helloworld-spring.git', branch: 'master'
                 script {
@@ -10,7 +10,7 @@ pipeline {
                 }
             }
         }
-      stage('Check running containers') {
+      stage('Building Application Artifact') {
         steps {
           container('maven') {
             
@@ -23,7 +23,7 @@ pipeline {
           }
         }
       }
-      stage('build docker images') {
+      stage('building docker images') {
         steps {
           container('docker') {
             
@@ -34,7 +34,7 @@ pipeline {
           }
         }
       }
-      stage('pushing image to artifact repository') {
+      stage('pushing image to artifactory') {
         steps {
           container('docker') {
             
@@ -46,14 +46,12 @@ pipeline {
           }
         }
       }
-      stage('delete old chekout and check from new repository') {
+      stage('Updating Helm Chart with new image tag') {
         steps {
-            sh 'rm -rf *'
-            git url: 'https://github.com/gmoez/cicdHelm.git', branch: 'master', clean: true
-            sh 'ls -l'
-                
-            }
+            build job: 'deploy_dev', parameters: [string(name: 'TAG', value: GIT_TAG_NAME)]
+        }
       }
+
       
     }   
 
