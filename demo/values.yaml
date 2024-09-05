@@ -6,7 +6,7 @@ image:
   repository: moezg/springboot
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "V1.8-0-g0d8ec8c"
+  tag: "V1.9"
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
